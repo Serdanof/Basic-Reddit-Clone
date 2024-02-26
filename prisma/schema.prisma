@@ -7,18 +7,36 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+    provider        = "mysql"
+    url             = env("DATABASE_URL")
 
-    // Do not use foreign keys (PlanetScale does not support them)
-    relationMode = "prisma"
+    relationMode    = "prisma"
+}
+
+model User {
+    id          String      @unique
+    email       String      @unique
+    name        String
+    avatar      String
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          Int         @id @default(autoincrement())
+    title       String
+    content     String      @db.LongText
+    userId      String
+    parentId    Int?
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+}
 
-    @@index([name])
+model Vote {
+    id          Int         @id @default(autoincrement())
+    postId      Int
+    userId      String
+    score       Int
+
+    @@unique([postId, userId], name: "voteId")
 }

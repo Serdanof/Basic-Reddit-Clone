@@ -8,8 +8,7 @@ const psClient = new Client({ url: env.DATABASE_URL });
 
 const createPrismaClient = () =>
   new PrismaClient({
-    log:
-      env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    log: env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
     adapter: new PrismaPlanetScale(psClient),
   });
 
