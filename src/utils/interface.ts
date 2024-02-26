@@ -1,10 +1,10 @@
+import type React from "react";
+
 export interface User {
   id: string;
   email: string;
   name: string;
-  avatar: string;
-  createdAt: Date;
-  updatedAt: Date;
+  imageUrl: string;
 }
 
 export interface Post {
@@ -22,4 +22,15 @@ export interface Vote {
   postId: number;
   userId: string;
   score: string;
+}
+
+export interface IconProps {
+  color?: string;
+}
+
+export interface SidebarItem {
+  id: number;
+  name: string;
+  href: string;
+  icon: (props: IconProps) => React.JSX.Element
 }

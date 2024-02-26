@@ -7,5 +7,5 @@ export const postRouter = createTRPCRouter({
     return {
       greeting: `Hello ${input.text}`,
     };
-  })
+  }),
 });

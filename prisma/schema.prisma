@@ -7,26 +7,19 @@ generator client {
 }
 
 datasource db {
-    provider        = "mysql"
-    url             = env("DATABASE_URL")
+    provider            = "mysql"
+    url                 = env("DATABASE_URL")
+    shadowDatabaseUrl   = env("SHADOW_DATABASE_URL")
 
-    relationMode    = "prisma"
-}
-
-model User {
-    id          String      @unique
-    email       String      @unique
-    name        String
-    avatar      String
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
+    relationMode        = "prisma"
 }
 
 model Post {
     id          Int         @id @default(autoincrement())
     title       String
     content     String      @db.LongText
-    userId      String
+    poster      String
+    avatar      String
     parentId    Int?
     createdAt   DateTime    @default(now())
     updatedAt   DateTime    @updatedAt
