@@ -68,7 +68,7 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }): Promise<APIResponse> => {
       try {
         const postList: Post[] = await ctx.db.post.findMany({
-          where: { userId: input.userId ? { equals: input.userId } : undefined },
+          where: input.userId ? { userId: input.userId } : {},
           orderBy: { createdAt: "desc" },
         });
 
