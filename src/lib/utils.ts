@@ -7,11 +7,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Check the current vote status of the post with the user
 export function checkVoteStatus(voters: Vote[] | undefined, user: User): VOTE_TYPE {
   const vote = voters?.find((vote: Vote) => vote.userId === user.id);
   return vote ? vote.score : 0;
 }
 
+// Format posted date
 export function formatDate(date: Date) {
   const currentDate: Date = new Date();
   const differenceInTime: number = currentDate.getTime() - date.getTime();

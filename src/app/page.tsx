@@ -6,9 +6,10 @@ import PostList from "@/app/_components/post-list";
 import { api } from "@/trpc/server";
 import type { Post } from "@/utils/interface";
 
+// Server side component
 export default async function HomePage() {
   const user = await currentUser();
-  const postList: Post[] = (await api.post.get.query()).result;
+  const postList: Post[] = (await api.post.get.query({})).result; // Fetch all posts
 
   return (
     <div className="flex w-full flex-col px-4 py-10 md:w-[600px] md:px-0">

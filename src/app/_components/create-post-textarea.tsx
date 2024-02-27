@@ -22,15 +22,16 @@ const CreatePostTextArea = () => {
   const router = useRouter();
   const user = useSelector((store: RootState) => getUserState(store));
 
+  // tRPC mutation for creating a new post
   const mutation = api.post.create.useMutation({
     onSuccess: (response: APIResponse) => {
       setTitle("");
       setContent("");
       setIsLoading(false);
-      if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px";
+      if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px"; // Set textarea height to origin
 
       toast(response.message);
-      router.refresh();
+      router.refresh(); // Refresh server-side components
     },
     onError: (error) => {
       setIsLoading(false);

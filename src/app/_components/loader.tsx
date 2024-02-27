@@ -1,5 +1,6 @@
 import type { LoaderProps } from "@/utils/interface";
 
+// Spinner component used in shadcn-ui button components
 const Loader = (props: LoaderProps) => {
   return (
     <span

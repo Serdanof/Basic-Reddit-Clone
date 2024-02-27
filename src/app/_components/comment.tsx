@@ -24,12 +24,13 @@ const CommentPost = ({ data }: { data: Comment }) => {
   const router = useRouter();
   const user = useSelector((store: RootState) => getUserState(store));
 
+  // tRPC mutation for handling comment upvote and downvote
   const mutation = api.post.vote.useMutation({
     onSuccess: (response: APIResponse) => {
       setIsVotting(false);
       toast(response.message);
 
-      router.refresh();
+      router.refresh(); // Refresh server-side components
     },
     onError: (error) => {
       toast(error.message);
@@ -37,7 +38,7 @@ const CommentPost = ({ data }: { data: Comment }) => {
     },
   });
 
-  const [isCommentOpen, setIsCommentOpen] = React.useState(false);
+  const [isReplyOpen, SetIsReplyOpen] = React.useState(false);
   const [isVotting, setIsVotting] = React.useState(false);
 
   const upvotePost = () => {
@@ -62,7 +63,8 @@ const CommentPost = ({ data }: { data: Comment }) => {
     });
   };
 
-  const toggleCommentOpen = () => setIsCommentOpen(!isCommentOpen);
+  // Toggle reply textarea visibility
+  const toggleReplyOpen = () => SetIsReplyOpen(!isReplyOpen);
 
   return (
     <div className="my-6 w-full">
@@ -103,15 +105,15 @@ const CommentPost = ({ data }: { data: Comment }) => {
         </button>
 
         <button
-          onClick={() => (user ? toggleCommentOpen() : router.push(ROUTES.SIGN_IN))}
-          className={`ml-6 flex items-center hover:text-primary [&_path]:hover:stroke-primary ${isCommentOpen && "text-primary [&_path]:stroke-primary"}`}
+          onClick={() => (user ? toggleReplyOpen() : router.push(ROUTES.SIGN_IN))}
+          className={`ml-6 flex items-center hover:text-primary [&_path]:hover:stroke-primary ${isReplyOpen && "text-primary [&_path]:stroke-primary"}`}
         >
           <ReplyIcon color="black" />
           <p className="ml-2">Reply</p>
         </button>
       </div>
 
-      {isCommentOpen && <ReplyTextarea postId={postId} parentId={id} toggleOpen={toggleCommentOpen} />}
+      {isReplyOpen && <ReplyTextarea postId={postId} parentId={id} toggleOpen={toggleReplyOpen} />}
 
       {children &&
         children.length > 0 &&

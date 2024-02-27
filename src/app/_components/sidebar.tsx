@@ -3,7 +3,8 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
-import { UserButton, useClerk } from "@clerk/nextjs";
+import { useSelector } from "react-redux";
+import { UserButton } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -12,13 +13,16 @@ import SidebarIcon from "@/components/icons/SidebarIcon";
 
 import { authorizedUserSidebar, unauthorizedUserSidebar } from "@/utils/config";
 import type { SidebarItem } from "@/utils/interface";
+import { ROUTES } from "@/utils/enums";
+import type { RootState } from "@/redux";
+import { getUserState } from "@/redux/userSlice";
 
 const Sidebar = () => {
-  const pathname = usePathname();
-  const { user } = useClerk();
+  const pathname = usePathname(); // Get current url
+  const user = useSelector((store: RootState) => getUserState(store));
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
-  const toggleSidebarOpen = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleSidebarOpen = () => setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar visibility in mobile device
 
   return (
     <React.Fragment>
@@ -37,33 +41,31 @@ const Sidebar = () => {
 
           {user
             ? authorizedUserSidebar.map((item: SidebarItem) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
-                >
-                  {React.createElement(item.icon, { color: "black" })}
-                  <p className="ml-3">{item.name}</p>
-                </Link>
-              ))
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
+              >
+                {React.createElement(item.icon, { color: "black" })}
+                <p className="ml-3">{item.name}</p>
+              </Link>
+            ))
             : unauthorizedUserSidebar.map((item: SidebarItem) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
-                >
-                  {React.createElement(item.icon, { color: "black" })}
-                  <p className="ml-3">{item.name}</p>
-                </Link>
-              ))}
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
+              >
+                {React.createElement(item.icon, { color: "black" })}
+                <p className="ml-3">{item.name}</p>
+              </Link>
+            ))}
         </div>
 
         {user && (
           <div className="flex items-center p-2">
-            <UserButton afterSignOutUrl="/" />
-            <h1 className="ml-3">
-              {user.firstName} {user.lastName}
-            </h1>
+            <UserButton afterSignOutUrl={ROUTES.HOMEPAGE} />
+            <h1 className="ml-3">{user.name}</h1>
           </div>
         )}
 

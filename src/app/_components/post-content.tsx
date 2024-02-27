@@ -18,12 +18,13 @@ import { POST_TYPE, VOTE_TYPE } from "@/utils/enums";
 const PostContent = ({ data }: { data: Post }) => {
   const { id, title, content, votes, voters, userName, userAvatar, createdAt } = data;
 
+  // tRPC mutation for handling post upvote and downvote
   const mutation = api.post.vote.useMutation({
     onSuccess: (response: APIResponse) => {
       setIsVotting(false);
       toast(response.message);
 
-      router.refresh();
+      router.refresh(); // Refresh server-side components
     },
     onError: (error) => {
       toast(error.message);
@@ -33,7 +34,6 @@ const PostContent = ({ data }: { data: Post }) => {
 
   const router = useRouter();
   const user = useSelector((store: RootState) => getUserState(store));
-
   const [isVotting, setIsVotting] = React.useState(false);
 
   const upvotePost = () => {
@@ -59,49 +59,47 @@ const PostContent = ({ data }: { data: Post }) => {
   };
 
   return (
-    data && (
-      <div className="w-full px-4 md:w-[600px] md:px-0">
-        <div className="my-2 flex w-full">
-          <div className="mx-2 flex h-24 flex-col items-center justify-between">
-            <button
-              className={`${isVotting ? "cursor-wait" : checkVoteStatus(voters, user) === VOTE_TYPE.UPVOTE ? "[&_path]:stroke-primary" : "[&_path]:hover:stroke-primary"}`}
-              disabled={isVotting}
-              onClick={upvotePost}
-            >
-              <UpvoteIcon color="black" />
-            </button>
+    <div className="w-full px-4 md:w-[600px] md:px-0">
+      <div className="my-2 flex w-full">
+        <div className="mx-2 flex h-24 flex-col items-center justify-between">
+          <button
+            className={`${isVotting ? "cursor-wait" : checkVoteStatus(voters, user) === VOTE_TYPE.UPVOTE ? "[&_path]:stroke-primary" : "[&_path]:hover:stroke-primary"}`}
+            disabled={isVotting}
+            onClick={upvotePost}
+          >
+            <UpvoteIcon color="black" />
+          </button>
 
-            <p>{votes}</p>
+          <p>{votes}</p>
 
-            <button
-              className={`${isVotting ? "cursor-wait" : checkVoteStatus(voters, user) === VOTE_TYPE.DOWNVOTE ? "[&_path]:stroke-primary" : "[&_path]:hover:stroke-primary"}`}
-              disabled={isVotting}
-              onClick={downvotePost}
-            >
-              <DownvoteIcon color="black" />
-            </button>
+          <button
+            className={`${isVotting ? "cursor-wait" : checkVoteStatus(voters, user) === VOTE_TYPE.DOWNVOTE ? "[&_path]:stroke-primary" : "[&_path]:hover:stroke-primary"}`}
+            disabled={isVotting}
+            onClick={downvotePost}
+          >
+            <DownvoteIcon color="black" />
+          </button>
+        </div>
+
+        <div className="ml-2 flex w-full flex-col">
+          <div className="flex items-center">
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={userAvatar} alt="avatar" />
+              <AvatarFallback>{userName.slice(0, 1)}</AvatarFallback>
+            </Avatar>
+
+            <p className="ml-2 text-sm text-gray-700">
+              Posted by {userName} {formatDate(createdAt)}
+            </p>
           </div>
 
-          <div className="ml-2 flex w-full flex-col">
-            <div className="flex items-center">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src={userAvatar} alt="avatar" />
-                <AvatarFallback>{userName.slice(0, 1)}</AvatarFallback>
-              </Avatar>
+          <h1 className="py-2">{title}</h1>
 
-              <p className="ml-2 text-sm text-gray-700">
-                Posted by {userName} {formatDate(createdAt)}
-              </p>
-            </div>
-
-            <h1 className="py-2">{title}</h1>
-
-            <p className="whitespace-pre-line text-sm text-gray-700">{content}</p>
-          </div>
+          <p className="whitespace-pre-line text-sm text-gray-700">{content}</p>
         </div>
       </div>
-    )
-  );
+    </div>
+  )
 };
 
 export default PostContent;

@@ -3,6 +3,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import type { APIResponse } from "@/utils/interface";
 
 export const commentRouter = createTRPCRouter({
+  // Create a new comment to the post
   create: publicProcedure.input(CommentSchema).mutation(async ({ ctx, input }): Promise<APIResponse> => {
     try {
       await ctx.db.comment.create({

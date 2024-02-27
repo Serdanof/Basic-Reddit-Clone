@@ -27,7 +27,7 @@ const PostList = ({ data }: { data: Post }) => {
       setIsVotting(false);
       toast(response.message);
 
-      router.refresh();
+      router.refresh(); // Refresh server-side components
     },
     onError: (error) => {
       toast(error.message);

@@ -30,15 +30,16 @@ const ReplyTextarea = ({
   const user = useSelector((store: RootState) => getUserState(store));
   const router = useRouter();
 
+  // tRPC mutation for adding a new comment to the post
   const mutation = api.comment.create.useMutation({
     onSuccess: (response: APIResponse) => {
       setContent("");
       setIsLoading(false);
       if (toggleOpen) toggleOpen();
-      if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px";
+      if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px"; // set textarea height to origin
 
       toast(response.message);
-      router.refresh();
+      router.refresh();  // Refresh server-side components
     },
     onError: (error) => {
       setIsLoading(false);
@@ -58,7 +59,7 @@ const ReplyTextarea = ({
         userName: user.name,
         userAvatar: user.imageUrl,
       });
-    } else {
+    } else { // toast an alert when input is empty
       toast("Please fill out the comment.");
     }
   };

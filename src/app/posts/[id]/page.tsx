@@ -10,10 +10,11 @@ import BackIcon from "@/components/icons/BackIcon";
 import { api } from "@/trpc/server";
 import type { PostContentPageProps, Comment, Post } from "@/utils/interface";
 
+// Server side component
 export default async function PostContentPage(props: PostContentPageProps) {
-  const { id } = props.params;
+  const { id } = props.params; // Get post id from the route url
   const user = await currentUser();
-  const post: Post = (await api.post.getById.query({ id: Number(id) })).result;
+  const post: Post = (await api.post.getById.query({ id: Number(id) })).result; // Fetch post data by Id
 
   return (
     <div className="flex w-full flex-col items-end px-4 md:w-[600px] md:px-0">

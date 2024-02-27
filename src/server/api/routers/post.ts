@@ -5,6 +5,7 @@ import { PostSchema, VoteSchema } from "@/lib/validations";
 import { POST_TYPE } from "@/utils/enums";
 import type { Post, Comment, Vote, APIResponse } from "@/utils/interface";
 
+// Fetch 2nd level comments of the post with vote data
 const getFirstComments = async (db: PrismaClient, postId: number) => {
   const children: Comment[] = await db.comment.findMany({ where: { postId, parentId: null } });
 
@@ -31,6 +32,7 @@ const getFirstComments = async (db: PrismaClient, postId: number) => {
   return nestedChildren;
 };
 
+// Fetch other level child comments using recursion function calling
 const fetchNestedChildren = async (db: PrismaClient, parentId: number) => {
   const children: Comment[] = await db.comment.findMany({
     where: { parentId, id: { not: parentId } },
@@ -59,10 +61,13 @@ const fetchNestedChildren = async (db: PrismaClient, parentId: number) => {
   return nestedChildren;
 };
 
+
 export const postRouter = createTRPCRouter({
-  get: publicProcedure.query(async ({ ctx }): Promise<APIResponse> => {
+  // Return all posts or with specific user Id
+  get: publicProcedure.input(z.object({ userId: z.string().optional() })).query(async ({ ctx, input }): Promise<APIResponse> => {
     try {
       const postList: Post[] = await ctx.db.post.findMany({
+        where: { userId: input.userId ? { equals: input.userId } : undefined },
         orderBy: { createdAt: "desc" },
       });
 
@@ -93,6 +98,7 @@ export const postRouter = createTRPCRouter({
     }
   }),
 
+  // Find post by Id
   getById: publicProcedure.input(z.object({ id: z.number() })).query(async ({ input, ctx }): Promise<APIResponse> => {
     const { id } = input;
 
@@ -128,6 +134,7 @@ export const postRouter = createTRPCRouter({
     }
   }),
 
+  // Create a new post
   create: publicProcedure.input(PostSchema).mutation(async ({ ctx, input }): Promise<APIResponse> => {
     try {
       await ctx.db.post.create({
@@ -155,6 +162,7 @@ export const postRouter = createTRPCRouter({
     }
   }),
 
+  // Vote to the post
   vote: publicProcedure.input(VoteSchema).mutation(async ({ ctx, input }): Promise<APIResponse> => {
     const { postId, postType, userId, score } = input;
 

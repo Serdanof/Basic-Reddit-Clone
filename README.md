@@ -26,22 +26,22 @@ CLERK_SECRET_KEY='YOUR CLERK SECRET KEY'
 DATABASE_URL='YOUR DATABASE URL'
 ```
 
-2. Install pnpm
+3. Install pnpm
 
 ```bash
 npm i -g pnpm
 ```
 
-3. Install the dependencies:
+4. Install the dependencies:
 
 ```bash
 pnpm install
 ```
 
-4. Run the development server:
+5. Run the development server:
 
 ```bash
 pnpm dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

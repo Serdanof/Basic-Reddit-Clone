@@ -9,6 +9,7 @@ const initialState: User = {
   imageUrl: "",
 };
 
+// Redux slice for storing user info
 export const userSlice = createSlice({
   name: "user",
   initialState,

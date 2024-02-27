@@ -7,11 +7,12 @@ import type { AppDispatch } from "@/redux";
 import { addUser } from "@/redux/userSlice";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useClerk();
+  const { user } = useClerk(); // Fetch user info from Clerk Provider
   const dispatch: AppDispatch = useDispatch();
 
   React.useEffect(() => {
     if (user?.id) {
+      // Add userinfo to Redux store
       dispatch(
         addUser({
           id: user.id,
