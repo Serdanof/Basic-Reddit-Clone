@@ -39,7 +39,7 @@ const ReplyTextarea = ({
       if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px"; // set textarea height to origin
 
       toast(response.message);
-      router.refresh();  // Refresh server-side components
+      router.refresh(); // Refresh server-side components
     },
     onError: (error) => {
       setIsLoading(false);
@@ -59,7 +59,8 @@ const ReplyTextarea = ({
         userName: user.name,
         userAvatar: user.imageUrl,
       });
-    } else { // toast an alert when input is empty
+    } else {
+      // toast an alert when input is empty
       toast("Please fill out the comment.");
     }
   };

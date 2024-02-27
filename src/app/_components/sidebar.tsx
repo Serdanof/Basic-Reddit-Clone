@@ -41,25 +41,25 @@ const Sidebar = () => {
 
           {user
             ? authorizedUserSidebar.map((item: SidebarItem) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
-              >
-                {React.createElement(item.icon, { color: "black" })}
-                <p className="ml-3">{item.name}</p>
-              </Link>
-            ))
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
+                >
+                  {React.createElement(item.icon, { color: "black" })}
+                  <p className="ml-3">{item.name}</p>
+                </Link>
+              ))
             : unauthorizedUserSidebar.map((item: SidebarItem) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
-              >
-                {React.createElement(item.icon, { color: "black" })}
-                <p className="ml-3">{item.name}</p>
-              </Link>
-            ))}
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={`my-1 flex w-full items-center rounded-xl p-3 hover:bg-secondary [&>p]:hover:text-primary [&_path]:hover:stroke-primary ${pathname === item.href && "bg-secondary text-primary [&_path]:stroke-primary"}`}
+                >
+                  {React.createElement(item.icon, { color: "black" })}
+                  <p className="ml-3">{item.name}</p>
+                </Link>
+              ))}
         </div>
 
         {user && (

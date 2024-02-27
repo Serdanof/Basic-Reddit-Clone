@@ -61,42 +61,43 @@ const fetchNestedChildren = async (db: PrismaClient, parentId: number) => {
   return nestedChildren;
 };
 
-
 export const postRouter = createTRPCRouter({
   // Return all posts or with specific user Id
-  get: publicProcedure.input(z.object({ userId: z.string().optional() })).query(async ({ ctx, input }): Promise<APIResponse> => {
-    try {
-      const postList: Post[] = await ctx.db.post.findMany({
-        where: { userId: input.userId ? { equals: input.userId } : undefined },
-        orderBy: { createdAt: "desc" },
-      });
+  get: publicProcedure
+    .input(z.object({ userId: z.string().optional() }))
+    .query(async ({ ctx, input }): Promise<APIResponse> => {
+      try {
+        const postList: Post[] = await ctx.db.post.findMany({
+          where: { userId: input.userId ? { equals: input.userId } : undefined },
+          orderBy: { createdAt: "desc" },
+        });
 
-      const posts = await Promise.all(
-        postList.map(async (post) => {
-          const voteUsers: Vote[] = await ctx.db.vote.findMany({
-            where: { postType: POST_TYPE.POST, postId: post.id },
-          });
+        const posts = await Promise.all(
+          postList.map(async (post) => {
+            const voteUsers: Vote[] = await ctx.db.vote.findMany({
+              where: { postType: POST_TYPE.POST, postId: post.id },
+            });
 
-          return {
-            ...post,
-            votes: voteUsers.reduce((sum: number, vote: Vote) => sum + vote.score, 0),
-            voters: voteUsers,
-          };
-        }),
-      );
+            return {
+              ...post,
+              votes: voteUsers.reduce((sum: number, vote: Vote) => sum + vote.score, 0),
+              voters: voteUsers,
+            };
+          }),
+        );
 
-      return {
-        success: true,
-        result: posts,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: "Internal Server Error!",
-        error,
-      };
-    }
-  }),
+        return {
+          success: true,
+          result: posts,
+        };
+      } catch (error) {
+        return {
+          success: false,
+          message: "Internal Server Error!",
+          error,
+        };
+      }
+    }),
 
   // Find post by Id
   getById: publicProcedure.input(z.object({ id: z.number() })).query(async ({ input, ctx }): Promise<APIResponse> => {

@@ -99,7 +99,7 @@ const PostContent = ({ data }: { data: Post }) => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default PostContent;

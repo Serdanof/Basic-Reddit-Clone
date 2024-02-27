@@ -16,8 +16,7 @@ export default async function MyPostsPage() {
       {user && <CreatePostTextArea />}
 
       {postList && postList.length > 0 ? (
-        postList
-          .map((post: Post) => <PostList key={post.id} data={post} />)
+        postList.map((post: Post) => <PostList key={post.id} data={post} />)
       ) : (
         <p className="w-full p-10 text-center text-gray-400">No articles posted</p>
       )}
