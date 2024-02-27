@@ -31,7 +31,6 @@ const PostContent = ({ data }: { data: Post }) => {
     },
   });
 
-
   const router = useRouter();
   const user = useSelector((store: RootState) => getUserState(store));
 
@@ -83,7 +82,7 @@ const PostContent = ({ data }: { data: Post }) => {
             </button>
           </div>
 
-          <div className="flex flex-col w-full ml-2">
+          <div className="ml-2 flex w-full flex-col">
             <div className="flex items-center">
               <Avatar className="h-6 w-6">
                 <AvatarImage src={userAvatar} alt="avatar" />

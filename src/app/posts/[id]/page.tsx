@@ -16,12 +16,9 @@ export default async function PostContentPage(props: PostContentPageProps) {
   const post: Post = (await api.post.getById.query({ id: Number(id) })).result;
 
   return (
-    <div className="flex flex-col items-end w-full md:w-[600px] px-4 md:px-0">
+    <div className="flex w-full flex-col items-end px-4 md:w-[600px] md:px-0">
       <div className="w-full px-2 py-6">
-        <Link
-          href={"/"}
-          className="flex cursor-pointer items-center hover:text-primary [&_path]:hover:stroke-primary"
-        >
+        <Link href={"/"} className="flex cursor-pointer items-center hover:text-primary [&_path]:hover:stroke-primary">
           <BackIcon color="black" />
           <p className="ml-4">Back to posts</p>
         </Link>

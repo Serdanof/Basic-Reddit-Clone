@@ -29,7 +29,7 @@ const CreatePostTextArea = () => {
       setIsLoading(false);
       if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px";
 
-      toast(response.message)
+      toast(response.message);
       router.refresh();
     },
     onError: (error) => {
@@ -49,7 +49,7 @@ const CreatePostTextArea = () => {
         content,
         userId: user.id,
         userName: user.name,
-        userAvatar: user.imageUrl
+        userAvatar: user.imageUrl,
       });
     } else {
       toast("Please fill out the title and the content.");
@@ -57,8 +57,8 @@ const CreatePostTextArea = () => {
   };
 
   return (
-    <div className="flex w-full p-4 rounded-xl border border-gray-200 shadow-lg shadow-gray-100">
-      <div className="flex items-start justify-start mr-4">
+    <div className="flex w-full rounded-xl border border-gray-200 p-4 shadow-lg shadow-gray-100">
+      <div className="mr-4 flex items-start justify-start">
         <Avatar className="h-6 w-6">
           <AvatarImage src={user.imageUrl} />
           <AvatarFallback>{user.name?.slice(0, 1)}</AvatarFallback>
@@ -77,14 +77,14 @@ const CreatePostTextArea = () => {
         <AutosizeTextarea
           ref={textAreaRef}
           placeholder="Share your thoughts with the world!"
-          className="tracking-wider border-0 border-b border-gray-300 p-0 text-base resize-none rounded-none focus-visible:border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="resize-none rounded-none border-0 border-b border-gray-300 p-0 text-base tracking-wider focus-visible:border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0"
           value={content}
           onChange={({ target: { value } }) => setContent(value)}
           disabled={isLoading}
         />
 
         <div className="flex w-full justify-end">
-          <Button className="w-16 h-10 mt-4 rounded-lg text-sm text-white" disabled={isLoading} onClick={createPost}>
+          <Button className="mt-4 h-10 w-16 rounded-lg text-sm text-white" disabled={isLoading} onClick={createPost}>
             {isLoading ? <Loader /> : "Post"}
           </Button>
         </div>

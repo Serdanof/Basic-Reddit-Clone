@@ -14,12 +14,11 @@ export default async function HomePage() {
     <div className="flex w-full flex-col px-4 py-10 md:w-[600px] md:px-0">
       {user && <CreatePostTextArea />}
 
-      {
-        postList && postList.length > 0 ?
-          postList.map((post: Post) => <PostList key={post.id} data={post} />) : (
-            <p className="w-full p-10 text-center text-gray-400">No articles posted</p>
-          )
-      }
+      {postList && postList.length > 0 ? (
+        postList.map((post: Post) => <PostList key={post.id} data={post} />)
+      ) : (
+        <p className="w-full p-10 text-center text-gray-400">No articles posted</p>
+      )}
     </div>
   );
 }

@@ -60,9 +60,9 @@ const PostList = ({ data }: { data: Post }) => {
   };
 
   return (
-    <div className="w-full md:w-[600px] px-4 md:px-0">
-      <div className="flex w-full my-10">
-        <div className="flex flex-col items-center justify-between h-20 mx-2">
+    <div className="w-full px-4 md:w-[600px] md:px-0">
+      <div className="my-10 flex w-full">
+        <div className="mx-2 flex h-20 flex-col items-center justify-between">
           <button
             className={`${isVotting ? "cursor-wait" : checkVoteStatus(voters, user) === VOTE_TYPE.UPVOTE ? "[&_path]:stroke-primary" : "[&_path]:hover:stroke-primary"}`}
             disabled={isVotting}
@@ -82,7 +82,7 @@ const PostList = ({ data }: { data: Post }) => {
           </button>
         </div>
 
-        <div className="flex flex-col w-full ml-2 cursor-pointer ">
+        <div className="ml-2 flex w-full cursor-pointer flex-col ">
           <div className="flex items-center">
             <Avatar className="h-6 w-6">
               <AvatarImage src={userAvatar} alt="avatar" />

@@ -18,13 +18,13 @@ export const commentRouter = createTRPCRouter({
 
       return {
         success: true,
-        message: "Successfully commented!"
-      }
+        message: "Successfully commented!",
+      };
     } catch (error) {
       return {
         success: false,
         message: "Internal Server Error!",
-        error
+        error,
       };
     }
   }),

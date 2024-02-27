@@ -23,7 +23,7 @@ const getFirstComments = async (db: PrismaClient, postId: number) => {
         ...child,
         votes: voteUsers.reduce((sum: number, vote: Vote) => sum + vote.score, 0),
         voters: voteUsers,
-        children: newChildren
+        children: newChildren,
       };
     }),
   );
@@ -75,20 +75,20 @@ export const postRouter = createTRPCRouter({
           return {
             ...post,
             votes: voteUsers.reduce((sum: number, vote: Vote) => sum + vote.score, 0),
-            voters: voteUsers
+            voters: voteUsers,
           };
         }),
       );
 
       return {
         success: true,
-        result: posts
-      }
+        result: posts,
+      };
     } catch (error) {
       return {
         success: false,
         message: "Internal Server Error!",
-        error
+        error,
       };
     }
   }),
@@ -110,20 +110,20 @@ export const postRouter = createTRPCRouter({
             ...post,
             votes: voteUsers.reduce((sum: number, vote: Vote) => sum + vote.score, 0),
             voters: voteUsers,
-            children
-          }
+            children,
+          },
         };
       } else {
         return {
           success: false,
-          message: "Post Not Found"
-        }
+          message: "Post Not Found",
+        };
       }
     } catch (error) {
       return {
         success: false,
         message: "Internal Server Error!",
-        error
+        error,
       };
     }
   }),
@@ -138,19 +138,19 @@ export const postRouter = createTRPCRouter({
           userId: input.userId,
           userName: input.userName,
           userAvatar: input.userAvatar,
-          votes: 0
+          votes: 0,
         },
       });
 
       return {
         success: true,
-        message: "Successfully Posted!"
+        message: "Successfully Posted!",
       };
     } catch (error) {
       return {
         success: false,
         message: "Internal Server Error!",
-        error
+        error,
       };
     }
   }),
@@ -169,15 +169,15 @@ export const postRouter = createTRPCRouter({
 
       return {
         success: true,
-        message: "Successfully voted!"
-      }
+        message: "Successfully voted!",
+      };
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
       return {
         success: false,
         message: "Internal Server Error!",
-        error
+        error,
       };
     }
   }),

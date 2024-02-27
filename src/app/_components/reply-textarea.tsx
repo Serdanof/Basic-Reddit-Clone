@@ -14,7 +14,15 @@ import type { RootState } from "@/redux";
 import { getUserState } from "@/redux/userSlice";
 import type { APIResponse } from "@/utils/interface";
 
-const ReplyTextarea = ({ postId, parentId, toggleOpen }: { postId: number; parentId?: number, toggleOpen?: () => void }) => {
+const ReplyTextarea = ({
+  postId,
+  parentId,
+  toggleOpen,
+}: {
+  postId: number;
+  parentId?: number;
+  toggleOpen?: () => void;
+}) => {
   const [content, setContent] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const textAreaRef = React.useRef<AutosizeTextAreaRef>(null);
@@ -29,7 +37,7 @@ const ReplyTextarea = ({ postId, parentId, toggleOpen }: { postId: number; paren
       if (toggleOpen) toggleOpen();
       if (textAreaRef.current) textAreaRef.current.textArea.style.height = "55px";
 
-      toast(response.message)
+      toast(response.message);
       router.refresh();
     },
     onError: (error) => {
@@ -48,7 +56,7 @@ const ReplyTextarea = ({ postId, parentId, toggleOpen }: { postId: number; paren
         postId,
         parentId: parentId && parentId,
         userName: user.name,
-        userAvatar: user.imageUrl
+        userAvatar: user.imageUrl,
       });
     } else {
       toast("Please fill out the comment.");
@@ -56,7 +64,7 @@ const ReplyTextarea = ({ postId, parentId, toggleOpen }: { postId: number; paren
   };
 
   return (
-    <div className="flex w-full my-4 p-4 rounded-xl border border-[#E5E7EB] shadow-md shadow-gray-100">
+    <div className="my-4 flex w-full rounded-xl border border-[#E5E7EB] p-4 shadow-md shadow-gray-100">
       <div className="mr-4 flex items-start justify-start">
         <Avatar className="h-6 w-6">
           <AvatarImage src={user.imageUrl} alt="avatar" />
@@ -73,8 +81,8 @@ const ReplyTextarea = ({ postId, parentId, toggleOpen }: { postId: number; paren
           disabled={isLoading}
         />
 
-        <div className="flex justify-end w-full">
-          <Button className="w-24 h-10 mt-3 rounded-lg text-sm text-white" disabled={isLoading} onClick={postComment}>
+        <div className="flex w-full justify-end">
+          <Button className="mt-3 h-10 w-24 rounded-lg text-sm text-white" disabled={isLoading} onClick={postComment}>
             {isLoading ? <Loader /> : "Comment"}
           </Button>
         </div>

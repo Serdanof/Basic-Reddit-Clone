@@ -65,9 +65,9 @@ const CommentPost = ({ data }: { data: Comment }) => {
   const toggleCommentOpen = () => setIsCommentOpen(!isCommentOpen);
 
   return (
-    <div className="w-full my-6">
+    <div className="my-6 w-full">
       <div className="flex w-full">
-        <div className="flex flex-col w-full ml-2">
+        <div className="ml-2 flex w-full flex-col">
           <div className="flex items-center">
             <Avatar className="h-6 w-6">
               <AvatarImage src={userAvatar} alt="avatar" />
