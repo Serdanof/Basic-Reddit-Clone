@@ -69,9 +69,9 @@ export interface Context {
   db: PrismaClient;
 }
 
-export interface APIResponse<T = unknown> {
+export interface APIResponse {
   success: boolean;
-  result?: T;
+  result?: any;
   message?: string;
   error?: unknown;
 }
