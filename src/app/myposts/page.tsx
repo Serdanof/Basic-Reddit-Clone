@@ -6,7 +6,7 @@ import PostList from "@/app/_components/post-list";
 import { api } from "@/trpc/server";
 import type { Post } from "@/utils/interface";
 
-export default async function HomePage() {
+export default async function MyPostsPage() {
   const user = await currentUser();
   const postList: Post[] = (await api.post.get.query()).result;
 
@@ -16,7 +16,9 @@ export default async function HomePage() {
 
       {
         postList && postList.length > 0 ?
-          postList.map((post: Post) => <PostList key={post.id} data={post} />) : (
+          postList
+            .filter((post: Post) => post.userId === user?.id)
+            .map((post: Post) => <PostList key={post.id} data={post} />) : (
             <p className="w-full p-10 text-center text-gray-400">No articles posted</p>
           )
       }

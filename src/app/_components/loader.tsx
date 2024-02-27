@@ -1,8 +1,11 @@
-function Loader() {
+import type { LoaderProps } from "@/utils/interface";
+
+const Loader = (props: LoaderProps) => {
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-white">
-      <span className="w-32 h-32 border-8 border-gray-200 border-t-primary rounded-full animate-spin"></span>
-    </div>
+    <span style={{
+      width: props.size ? props.size : 20,
+      height: props.size ? props.size : 20,
+    }} className="rounded-full border-[2px] border-transparent border-t-white animate-spin" />
   )
 }
 
